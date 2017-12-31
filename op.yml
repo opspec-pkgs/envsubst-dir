@@ -1,31 +1,31 @@
-name: github.com/opspec-pkgs/envsubst.dir
+name: github.com/opspec-pkgs/envsubst-dir
 description: replaces references of the form $VARIABLE or ${VARIABLE} with their corresponding values for all files in a directory
 inputs:
   variables:
     object:
       description: variables which, if referenced, will be replaced in template
       default: {}
-  directory:
+  templates:
     dir:
-      description: directory containing references in the form ${envVar} & $envVar
+      description: templates containing references in the form `${envVar}` & `$envVar`. See [example](example)
 outputs:
-  resultDir:
+  result:
     dir:
-      description: result of replacing variables in directory
+      description: result of replacing variables in templates
 version: 1.0.0
 run:
   serial:
     - op:
         pkg: { ref: github.com/opspec-pkgs/fs.cp-dir#1.0.0 }
         inputs:
-          sourceDir: $(directory)
+          sourceDir: $(templates)
         outputs:
-          resultDir:
+          copyOfTemplates: resultDir
     - container:
         image: { ref: 'node:8.9.0-alpine' }
         cmd: [node, /cmd.js ]
         dirs: 
-          /resultDir: $(resultDir)
+          /result: $(copyOfTemplates)
         files:
           /cmd.js:
           /variables.json: $(variables)

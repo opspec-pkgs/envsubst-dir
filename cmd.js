@@ -30,5 +30,5 @@ const fileEnvsubst = (itemAbsPath, file) => {
     fs.writeFileSync(itemAbsPath, hydratedFile);
 };
 
-processDirs('/resultDir');
+processDirs('/result');
 
