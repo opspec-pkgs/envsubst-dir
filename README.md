@@ -31,6 +31,7 @@ op:
   pkg: { ref: github.com/opspec-pkgs/envsubst.dir#1.0.0 }
   inputs:
     variables:
+    directory:
   ouputs:
     resultDir:
 ```
