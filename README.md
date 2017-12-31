@@ -1,8 +1,10 @@
-[![Build Status](https://travis-ci.org/opspec-pkgs/envsubst.dir.svg?branch=master)](https://travis-ci.org/opspec-pkgs/envsubst.dir)
+[![Build Status](https://travis-ci.org/opspec-pkgs/envsubst-dir.svg?branch=master)](https://travis-ci.org/opspec-pkgs/envsubst-dir)
 
 # Problem statement
 
 replaces references of the form $VARIABLE or ${VARIABLE} with their corresponding values for all files in a directory.
+
+see [example](example)
 
 # Format
 
@@ -15,25 +17,25 @@ format
 ## install
 
 ```shell
-opctl pkg install github.com/opspec-pkgs/envsubst.dir#1.0.0
+opctl pkg install github.com/opspec-pkgs/envsubst-dir#1.0.0
 ```
 
 ## run
 
 ```
-opctl run github.com/opspec-pkgs/envsubst.dir#1.0.0
+opctl run github.com/opspec-pkgs/envsubst-dir#1.0.0
 ```
 
 ## compose
 
 ```yaml
 op:
-  pkg: { ref: github.com/opspec-pkgs/envsubst.dir#1.0.0 }
+  pkg: { ref: github.com/opspec-pkgs/envsubst-dir#1.0.0 }
   inputs:
     variables:
-    directory:
-  ouputs:
-    resultDir:
+    templates:
+  outputs:
+    result:
 ```
 
 # Support
@@ -41,7 +43,7 @@ op:
 join us on
 [![Slack](https://opspec-slackin.herokuapp.com/badge.svg)](https://opspec-slackin.herokuapp.com/)
 or
-[open an issue](https://github.com/opspec-pkgs/envsubst.dir/issues)
+[open an issue](https://github.com/opspec-pkgs/envsubst-dir/issues)
 
 # Releases
 

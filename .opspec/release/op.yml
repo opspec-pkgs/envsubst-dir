@@ -32,7 +32,7 @@ run:
         pkg: { ref: github.com/opspec-pkgs/github.release.create#1.0.0 }
         inputs:
           owner: opspec-pkgs
-          repo: envsubst.dir
+          repo: envsubst-dir
           loginUsername: $(githubUsername)
           loginPassword: $(githubPassword)
           tag: $(version)
