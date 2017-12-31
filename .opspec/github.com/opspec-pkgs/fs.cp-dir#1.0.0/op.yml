@@ -1,0 +1,20 @@
+name: github.com/opspec-pkgs/fs.cp-dir
+description: copy sourceDir directory conents to resultDir directory
+inputs:
+  sourceDir:
+    dir:
+      description: directory containing content to copy
+outputs:
+  resultDir:
+    dir:
+      description: result directory containing copied data
+version: 1.0.0
+run:
+  serial:
+    - container:
+        cmd: [ sh, -ce, cp -r "./" "/resultDir" ]
+        dirs: 
+          /sourceDir: $(sourceDir)
+          /resultDir: $(resultDir)
+        image: { ref: 'alpine:3.6' }
+        workDir: /sourceDir

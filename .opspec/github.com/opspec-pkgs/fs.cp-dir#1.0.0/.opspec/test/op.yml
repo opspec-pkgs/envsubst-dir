@@ -1,0 +1,10 @@
+name: test
+description: tests the package
+inputs:
+  pkg:
+    dir:
+      default: .
+run:
+  op:
+    pkg: { ref: github.com/opspec-pkgs/opspec.pkg.validate#1.0.0 }
+    inputs: { pkg }

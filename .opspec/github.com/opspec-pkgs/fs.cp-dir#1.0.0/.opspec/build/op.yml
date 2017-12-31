@@ -1,0 +1,11 @@
+name: build
+description: builds the package
+inputs:
+  pkg:
+    dir:
+      default: .
+run:
+  serial:
+    - op:
+        pkg: { ref: test }
+        inputs: { pkg }

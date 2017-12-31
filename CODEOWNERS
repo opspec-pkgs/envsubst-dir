@@ -1,0 +1,1 @@
+* @opspec-pkgs/maintainers
