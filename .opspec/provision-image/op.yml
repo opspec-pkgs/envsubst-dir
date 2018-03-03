@@ -1,0 +1,44 @@
+name: build
+description: |
+  Provisions image for the pkg w/ name `opspecpkgs/$(opDotYml.name):${opDotYml.version}`.
+  
+  > Before first use, a Dockerfile MUST be added to `.opspec/provision-image`
+inputs:
+  dockerUsername:
+    string:
+      constraints: { minLength: 1 }
+      description: user for logging in to docker hub
+  dockerPassword:
+    string:
+      constraints: { minLength: 1 }
+      description: password for logging in to docker hub
+      isSecret: true
+  srcDir:
+    dir:
+      default: .
+run:
+  serial:
+    - op:
+        pkg: { ref: github.com/opspec-pkgs/yaml.parse#1.0.0 }
+        inputs: { yaml: $(srcDir/op.yml) }
+        outputs: { opDotYml: result }
+    - container:
+        image: { ref: 'alpine:3.6' }
+        cmd: [sh, -ce, 'echo -n opspecpkgs/${opName#*/*/}:$(opDotYml.version) > /imageName']
+        envVars:
+          opName: $(opDotYml.name)
+        files:
+          /imageName: $(imageName)
+    - op:
+        pkg: { ref: github.com/opspec-pkgs/docker.image.build#2.0.0 }
+        inputs:
+          dockerfile: $(/Dockerfile)
+          imageName:
+        outputs: { imageTar }
+    - op:
+        pkg: { ref: github.com/opspec-pkgs/docker.image.push#2.0.0 }
+        inputs:
+          imageTar:
+          imageName:
+          username: $(dockerUsername)
+          password: $(dockerPassword)

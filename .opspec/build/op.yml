@@ -1,11 +1,20 @@
 name: build
 description: builds the package
 inputs:
-  pkg:
+  srcDir:
     dir:
       default: .
+outputs:
+  srcDir:
+    dir: {}
 run:
   serial:
     - op:
         pkg: { ref: test }
-        inputs: { pkg }
+        inputs: { srcDir }
+    - op:
+        pkg: { ref: github.com/opspec-pkgs/_.pkg.bootstrap#1.0.0 }
+        inputs:
+          srcDir:
+        outputs:
+          srcDir:

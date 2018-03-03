@@ -1,9 +1,6 @@
 name: release
 description: releases the package
 inputs:
-  version:
-    string:
-      constraints: { format: semver }
   githubUsername:
     string:
       constraints: { minLength: 1 }
@@ -13,28 +10,42 @@ inputs:
       constraints: { minLength: 1 }
       description: password for logging in to github
       isSecret: true
-  pkg:
+  srcDir:
     dir:
       default: .
+outputs:
+  srcDir:
+    dir: {}
 run:
   serial:
     - op:
         pkg: { ref: build }
         inputs:
-          pkg:
+          srcDir:
         outputs:
-          imageTar:
+          srcDir:
+    - op:
+        pkg: { ref: github.com/opspec-pkgs/yaml.parse#1.0.0 }
+        inputs: { yaml: $(srcDir/op.yml) }
+        outputs: { opDotYml: result }
     - op:
         pkg: { ref: github.com/opspec-pkgs/git.repo.resolve-commit#1.0.0 }
-        inputs: { dotGitDir: $(pkg/.git) }
+        inputs: { dotGitDir: $(srcDir/.git) }
         outputs: { commit: }
+    - container:
+        image: { ref: 'alpine:3.6' }
+        cmd: [sh, -ce, 'echo -n ${opName#*/*/}  > /opRepo']
+        envVars:
+          opName: $(opDotYml.name)
+        files:
+          /opRepo: $(opRepo)
     - op:
         pkg: { ref: github.com/opspec-pkgs/github.release.create#1.0.0 }
         inputs:
           owner: opspec-pkgs
-          repo: envsubst-dir
+          repo: $(opRepo)
           loginUsername: $(githubUsername)
           loginPassword: $(githubPassword)
-          tag: $(version)
+          tag: $(opDotYml.version)
           commitish: $(commit)
-          name: $(version)
+          name: $(opDotYml.version)
