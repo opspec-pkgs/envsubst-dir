@@ -30,13 +30,13 @@ run:
         files:
           /imageName: $(imageName)
     - op:
-        pkg: { ref: github.com/opspec-pkgs/docker.image.build#2.0.0 }
+        pkg: { ref: github.com/opspec-pkgs/docker.image.build#2.0.1 }
         inputs:
           dockerfile: $(/Dockerfile)
           imageName:
         outputs: { imageTar }
     - op:
-        pkg: { ref: github.com/opspec-pkgs/docker.image.push#2.0.0 }
+        pkg: { ref: github.com/opspec-pkgs/docker.image.push#2.0.1 }
         inputs:
           imageTar:
           imageName:

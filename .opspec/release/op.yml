@@ -29,7 +29,7 @@ run:
         inputs: { yaml: $(srcDir/op.yml) }
         outputs: { opDotYml: result }
     - op:
-        pkg: { ref: github.com/opspec-pkgs/git.repo.resolve-commit#1.0.0 }
+        pkg: { ref: github.com/opspec-pkgs/git.resolve-commit#1.0.2 }
         inputs: { dotGitDir: $(srcDir/.git) }
         outputs: { commit: }
     - container:
