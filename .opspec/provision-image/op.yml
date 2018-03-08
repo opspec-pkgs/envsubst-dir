@@ -1,4 +1,4 @@
-name: build
+name: provision-image
 description: |
   Provisions image for the pkg w/ name `opspecpkgs/$(opDotYml.name):${opDotYml.version}`.
   
