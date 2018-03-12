@@ -1,4 +1,4 @@
-name: provision-image
+name: build
 description: |
   Provisions image for the pkg w/ name `opspecpkgs/$(opDotYml.name):${opDotYml.version}`.
   
@@ -30,13 +30,13 @@ run:
         files:
           /imageName: $(imageName)
     - op:
-        pkg: { ref: github.com/opspec-pkgs/docker.image.build#2.0.1 }
+        pkg: { ref: github.com/opspec-pkgs/docker.image.build#2.1.0 }
         inputs:
           dockerfile: $(/Dockerfile)
           imageName:
         outputs: { imageTar }
     - op:
-        pkg: { ref: github.com/opspec-pkgs/docker.image.push#2.0.1 }
+        pkg: { ref: github.com/opspec-pkgs/docker.image.push#2.1.0 }
         inputs:
           imageTar:
           imageName:
