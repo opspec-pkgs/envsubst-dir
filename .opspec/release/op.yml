@@ -1,5 +1,5 @@
 name: release
-description: releases the package
+description: releases the op
 inputs:
   githubUsername:
     string:
@@ -16,20 +16,21 @@ inputs:
 outputs:
   srcDir:
     dir: {}
+opspec: 0.1.6
 run:
   serial:
     - op:
-        pkg: { ref: build }
+        ref: build
         inputs:
           srcDir:
         outputs:
           srcDir:
     - op:
-        pkg: { ref: github.com/opspec-pkgs/yaml.parse#1.0.0 }
+        ref: github.com/opspec-pkgs/yaml.parse#1.0.0
         inputs: { yaml: $(srcDir/op.yml) }
         outputs: { opDotYml: result }
     - op:
-        pkg: { ref: github.com/opspec-pkgs/git.repo.resolve-commit#1.0.2 }
+        ref: github.com/opspec-pkgs/git.repo.resolve-commit#1.0.2
         inputs: { dotGitDir: $(srcDir/.git) }
         outputs: { commit: }
     - container:
@@ -40,7 +41,7 @@ run:
         files:
           /opRepo: $(opRepo)
     - op:
-        pkg: { ref: github.com/opspec-pkgs/github.release.create#1.1.0 }
+        ref: github.com/opspec-pkgs/github.release.create#1.1.0
         inputs:
           owner: opspec-pkgs
           repo: $(opRepo)

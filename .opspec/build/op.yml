@@ -1,5 +1,5 @@
 name: build
-description: builds the package
+description: builds the op
 inputs:
   srcDir:
     dir:
@@ -7,13 +7,14 @@ inputs:
 outputs:
   srcDir:
     dir: {}
+opspec: 0.1.6
 run:
   serial:
     - op:
-        pkg: { ref: test }
+        ref: test
         inputs: { srcDir }
     - op:
-        pkg: { ref: github.com/opspec-pkgs/_.pkg.bootstrap#1.0.0 }
+        ref: github.com/opspec-pkgs/_.op.bootstrap#2.0.0
         inputs:
           srcDir:
         outputs:

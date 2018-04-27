@@ -5,6 +5,16 @@ All notable changes will be documented in this file in accordance with
 
 ## \[Unreleased]
 
+## \[2.0.0] - 2018-04-27
+
+### Fixed
+
+- braces getting stripped from objects i.e. `{"name": "value"}` substituted as `"name": "value"`
+
+### Removed
+
+- opspec 0.1.6 compatibility
+
 ## \[1.1.0] - 2018-03-07
 
 ### Added
