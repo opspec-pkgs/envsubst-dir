@@ -14,7 +14,7 @@ run:
         ref: test
         inputs: { srcDir }
     - op:
-        ref: github.com/opspec-pkgs/_.op.bootstrap#2.0.0
+        ref: github.com/opspec-pkgs/_.op.bootstrap#2.0.1
         inputs:
           srcDir:
         outputs:
