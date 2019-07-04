@@ -13,7 +13,7 @@ outputs:
     dir:
       description: result of replacing variables in templates
 opspec: 0.1.6
-version: 2.0.0
+version: 2.0.1
 run:
   container:
     image: { ref: 'node:9.9.0-alpine' }

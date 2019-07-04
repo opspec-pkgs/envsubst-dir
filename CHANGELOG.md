@@ -5,6 +5,12 @@ All notable changes will be documented in this file in accordance with
 
 ## \[Unreleased]
 
+## \[2.0.1] - 2019-07-03
+
+### Fixed
+
+- substitution text containing [special replacement patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter) not replaced verbatim.
+
 ## \[2.0.0] - 2018-04-27
 
 ### Fixed
