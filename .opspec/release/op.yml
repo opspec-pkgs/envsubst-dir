@@ -5,33 +5,24 @@ inputs:
     string:
       constraints: { minLength: 1 }
       description: user for logging in to github
-  githubPassword:
+  githubAccessToken:
     string:
       constraints: { minLength: 1 }
-      description: password for logging in to github
+      description: accessToken for logging in to github
       isSecret: true
-  srcDir:
-    dir:
-      default: .
-outputs:
-  srcDir:
-    dir: {}
-opspec: 0.1.6
 run:
   serial:
     - op:
         ref: build
-        inputs:
-          srcDir:
-        outputs:
-          srcDir:
     - op:
         ref: github.com/opspec-pkgs/yaml.parse#1.0.0
-        inputs: { yaml: $(srcDir/op.yml) }
-        outputs: { opDotYml: result }
+        inputs:
+          yaml: $(../../op.yml)
+        outputs:
+          result: $(opDotYml)
     - op:
         ref: github.com/opspec-pkgs/git.repo.resolve-commit#1.0.2
-        inputs: { dotGitDir: $(srcDir/.git) }
+        inputs: { dotGitDir: $(../../.git) }
         outputs: { commit: }
     - container:
         image: { ref: 'alpine:3.6' }
@@ -46,7 +37,7 @@ run:
           owner: opspec-pkgs
           repo: $(opRepo)
           loginUsername: $(githubUsername)
-          loginPassword: $(githubPassword)
+          loginPassword: $(githubAccessToken)
           tag: $(opDotYml.version)
           commitish: $(commit)
           name: $(opDotYml.version)

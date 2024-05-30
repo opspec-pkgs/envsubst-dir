@@ -1,11 +1,7 @@
 name: test
 description: tests the op
-inputs:
-  srcDir:
-    dir:
-      default: .
-opspec: 0.1.6
 run:
   op:
     ref: github.com/opspec-pkgs/opspec.v0.1.6.op.validate#1.0.0
-    inputs: { op: $(srcDir) }
+    inputs:
+      op: $(../..)

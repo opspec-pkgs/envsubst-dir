@@ -1,31 +1,29 @@
 name: provision-image
 description: |
-  Provisions image for the op to [opspecpkgs docker hub org](https://hub.docker.com/u/opspecpkgs) w/ name `opspecpkgs/$(opDotYml.name):${opDotYml.version}`.
+  Provisions image for the op to [opspec-pkgs image registry](https://github.com/orgs/opspec-pkgs/packages) w/ name `$(opDotYml.name):${opDotYml.version}`.
   
   > Before first use, a Dockerfile MUST be added to `.opspec/provision-image`
 inputs:
-  dockerUsername:
+  githubUsername:
     string:
       constraints: { minLength: 1 }
-      description: user for logging in to docker hub
-  dockerPassword:
+      description: user for logging in to github
+  githubAccessToken:
     string:
       constraints: { minLength: 1 }
-      description: password for logging in to docker hub
+      description: accessToken for logging in to github
       isSecret: true
-  srcDir:
-    dir:
-      default: .
-opspec: 0.1.6
 run:
   serial:
     - op:
         ref: github.com/opspec-pkgs/yaml.parse#1.0.0
-        inputs: { yaml: $(srcDir/op.yml) }
-        outputs: { opDotYml: result }
+        inputs:
+          yaml: $(../../op.yml)
+        outputs:
+          result: $(opDotYml)
     - container:
         image: { ref: 'alpine:3.6' }
-        cmd: [sh, -ce, 'echo -n opspecpkgs/${opName#*/*/}:$(opDotYml.version) > /imageName']
+        cmd: [sh, -ce, 'echo -n ghcr.io/opspec-pkgs/${opName#*/*/}:$(opDotYml.version) > /imageName']
         envVars:
           opName: $(opDotYml.name)
         files:
@@ -33,7 +31,7 @@ run:
     - op:
         ref: github.com/opspec-pkgs/docker.image.build#2.1.0
         inputs:
-          dockerfile: $(/Dockerfile)
+          dockerfile: $(./Dockerfile)
           imageName:
         outputs: { imageTar }
     - op:
@@ -41,5 +39,6 @@ run:
         inputs:
           imageTar:
           imageName:
-          username: $(dockerUsername)
-          password: $(dockerPassword)
+          registry: ghcr.io
+          username: $(githubUsername)
+          password: $(githubAccessToken)
