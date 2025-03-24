@@ -13,7 +13,7 @@ inputs:
 run:
   serial:
     - op:
-        ref: build
+        ref: $(../build)
     - op:
         ref: github.com/opspec-pkgs/yaml.parse#1.0.0
         inputs:
